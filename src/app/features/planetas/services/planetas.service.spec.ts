@@ -1,0 +1,25 @@
+import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { PlanetasService } from './planetas.service';
+
+describe('PlanetasService', () => {
+  let servicio: PlanetasService;
+  let http: HttpTestingController;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting()] });
+    servicio = TestBed.inject(PlanetasService);
+    http = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => http.verify());
+
+  it('pide /planets con la página y el límite', () => {
+    servicio.listar(3).subscribe();
+    const req = http.expectOne((r) => r.url.endsWith('/planets'));
+    expect(req.request.params.get('page')).toBe('3');
+    expect(req.request.params.get('limit')).toBe('12');
+    req.flush({ items: [], meta: { totalItems: 0, itemCount: 0, itemsPerPage: 12, totalPages: 0, currentPage: 3 } });
+  });
+});

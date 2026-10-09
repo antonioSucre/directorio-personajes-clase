@@ -14,9 +14,12 @@ export class FiltrosPersonajes {
   readonly texto = input('');
   readonly raza = input('todas');
   readonly razas = input.required<string[]>();
+  readonly genero = input('todos');
+  readonly generos = input.required<string[]>();
 
   readonly textoCambio = output<string>();
   readonly razaCambio = output<string>();
+  readonly generoCambio = output<string>();
 
   // [E55] Lee el valor del DOM y lo emite hacia la página
   protected alEscribir(evento: Event) {
@@ -25,5 +28,9 @@ export class FiltrosPersonajes {
 
   protected alElegirRaza(evento: Event) {
     this.razaCambio.emit((evento.target as HTMLSelectElement).value);
+  }
+
+  protected alElegirGenero(evento: Event) {
+    this.generoCambio.emit((evento.target as HTMLSelectElement).value);
   }
 }

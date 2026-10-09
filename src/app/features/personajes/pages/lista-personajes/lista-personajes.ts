@@ -5,7 +5,7 @@ import { FavoritosService } from '@core/services/favoritos.service';
 import { Paginador } from '@shared/ui/paginador/paginador';
 import { FiltrosPersonajes } from '../../components/filtros-personajes/filtros-personajes';
 import { PersonajeCard } from '../../components/personaje-card/personaje-card';
-import { RAZAS } from '../../models/personaje.model';
+import { GENEROS, RAZAS } from '../../models/personaje.model';
 import { PersonajesService } from '../../services/personajes.service';
 
 // Página (componente contenedor): tiene el estado, habla con los servicios
@@ -21,11 +21,13 @@ export class ListaPersonajes {
   private readonly servicio = inject(PersonajesService);
   protected readonly favs = inject(FavoritosService);
   protected readonly razas = RAZAS;
+  protected readonly generos = GENEROS;
 
   // Estado de la UI (signals)
   // [E48] Estado de la UI: texto, raza y página
   protected readonly texto = signal('');
   protected readonly raza = signal('todas');
+  protected readonly genero = signal('todos');
   protected readonly pagina = signal(1);
 
   // Un solo objeto con todo lo que define la búsqueda
@@ -33,6 +35,7 @@ export class ListaPersonajes {
   private readonly filtro = computed(() => ({
     nombre: this.texto().trim(),
     raza: this.raza(),
+    genero: this.genero(),
     pagina: this.pagina(),
   }));
 
@@ -60,6 +63,11 @@ export class ListaPersonajes {
 
   protected alCambiarRaza(raza: string) {
     this.raza.set(raza);
+    this.pagina.set(1);
+  }
+
+  protected alCambiarGenero(genero: string) {
+    this.genero.set(genero);
     this.pagina.set(1);
   }
 }

@@ -42,8 +42,12 @@ export interface Filtro {
   pagina: number;
   nombre: string;
   raza: string;
+  genero: string;
 }
 
 // Razas que ofrece el filtro del listado
 // [E10] Constantes del dominio junto a sus modelos
 export const RAZAS = ['Saiyan', 'Human', 'Namekian', 'Frieza Race', 'Android', 'Majin', 'God', 'Angel'];
+
+// Géneros que ofrece el filtro del listado (valores de la API)
+export const GENEROS: Genero[] = ['Male', 'Female', 'Unknown'];
